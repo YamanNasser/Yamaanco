@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\Comments\Handlers\Notifications\**" />
+    <Compile Remove="SqlScripts\Commands\**" />
+    <Compile Remove="SqlScripts\Handlers\**" />
+    <Compile Remove="SqlScripts\Models\**" />
+    <Compile Remove="SqlScripts\Notifications\**" />
+    <Compile Remove="SqlScripts\Queries\**" />
+    <Compile Remove="SqlScripts\Validators\**" />
+    <Compile Remove="SqlScripts\ViewModel\**" />
+    <EmbeddedResource Remove="Features\Comments\Handlers\Notifications\**" />
+    <EmbeddedResource Remove="SqlScripts\Commands\**" />
+    <EmbeddedResource Remove="SqlScripts\Handlers\**" />
+    <EmbeddedResource Remove="SqlScripts\Models\**" />
+    <EmbeddedResource Remove="SqlScripts\Notifications\**" />
+    <EmbeddedResource Remove="SqlScripts\Queries\**" />
+    <EmbeddedResource Remove="SqlScripts\Validators\**" />
+    <EmbeddedResource Remove="SqlScripts\ViewModel\**" />
+    <None Remove="Features\Comments\Handlers\Notifications\**" />
+    <None Remove="SqlScripts\Commands\**" />
+    <None Remove="SqlScripts\Handlers\**" />
+    <None Remove="SqlScripts\Models\**" />
+    <None Remove="SqlScripts\Notifications\**" />
+    <None Remove="SqlScripts\Queries\**" />
+    <None Remove="SqlScripts\Validators\**" />
+    <None Remove="SqlScripts\ViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\GroupComments\Handlers\Notifications\CommentsReceivedHandler.cs" />
+    <Compile Remove="Features\GroupComments\Notifications\CommentsReceived.cs" />
+    <Compile Remove="Features\ProfileComments\Handlers\Notifications\CommentsReceivedHandler.cs" />
+    <Compile Remove="Features\ProfileComments\Notifications\CommentsReceived.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="FluentValidation" Version="9.3.0-preview2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.3.0-preview2" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    <PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.2.20475.6" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yamaanco.Domain\Yamaanco.Domain.csproj" />
+  </ItemGroup>
+</Project>

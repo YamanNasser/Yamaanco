@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.22.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0-rc.2.20475.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yamaanco.Application\Yamaanco.Application.csproj" />
+  </ItemGroup>
+</Project>
