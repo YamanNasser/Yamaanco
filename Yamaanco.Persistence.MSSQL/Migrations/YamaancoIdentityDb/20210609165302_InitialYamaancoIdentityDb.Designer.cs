@@ -10,8 +10,8 @@ using Yamaanco.Infrastructure.EF.Identity.Persistence.Context;
 namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoIdentityDb
 {
     [DbContext(typeof(YamaancoIdentityDbContext))]
-    [Migration("20201104154923_InitialLinkIdentityDb")]
-    partial class InitialLinkIdentityDb
+    [Migration("20210609165302_InitialYamaancoIdentityDb")]
+    partial class InitialYamaancoIdentityDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
 {
-    public partial class InitialLinkDb : Migration
+    public partial class InitialYamaancoDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,8 +94,8 @@ namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GroupTypeId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfViewer = table.Column<int>(type: "int", nullable: false),
-                    NumberOfMember = table.Column<int>(type: "int", nullable: false),
+                    NumberOfViewers = table.Column<int>(type: "int", nullable: false),
+                    NumberOfMembers = table.Column<int>(type: "int", nullable: false),
                     ProfileId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedById = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),

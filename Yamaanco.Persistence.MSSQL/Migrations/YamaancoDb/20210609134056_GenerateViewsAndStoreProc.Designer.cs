@@ -10,8 +10,8 @@ using Yamaanco.Infrastructure.EF.Persistence.MSSQL.Context;
 namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
 {
     [DbContext(typeof(MsSqlYamaancoDbContext))]
-    [Migration("20201107131757_Update001")]
-    partial class Update001
+    [Migration("20210609134056_GenerateViewsAndStoreProc")]
+    partial class GenerateViewsAndStoreProc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

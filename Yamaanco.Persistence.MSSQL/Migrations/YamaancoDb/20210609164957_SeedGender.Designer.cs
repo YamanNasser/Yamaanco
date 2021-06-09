@@ -10,8 +10,8 @@ using Yamaanco.Infrastructure.EF.Persistence.MSSQL.Context;
 namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
 {
     [DbContext(typeof(MsSqlYamaancoDbContext))]
-    [Migration("20201104152810_InitialLinkDb")]
-    partial class InitialLinkDb
+    [Migration("20210609164957_SeedGender")]
+    partial class SeedGender
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,10 +50,10 @@ namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfMember")
+                    b.Property<int>("NumberOfMembers")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfViewer")
+                    b.Property<int>("NumberOfViewers")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfileId")

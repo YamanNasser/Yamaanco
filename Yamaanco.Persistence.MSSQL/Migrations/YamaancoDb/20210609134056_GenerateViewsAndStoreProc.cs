@@ -1,4 +1,12 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoDb
+{
+    public partial class GenerateViewsAndStoreProc : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwProfileComments]
 AS
 SELECT        dbo.ProfileComment.Id, dbo.ProfileComment.CreatedById, dbo.ProfileComment.Created, dbo.ProfileComment.LastModified AS Modified, dbo.ProfileComment.Parent, dbo.ProfileComment.Root, dbo.ProfileComment.[Content], 
@@ -12,8 +20,10 @@ FROM            dbo.ProfileCommentResources RIGHT OUTER JOIN
                          dbo.Profile AS Profile_2 INNER JOIN
                          dbo.ProfileCommentPings ON Profile_2.Id = dbo.ProfileCommentPings.MentionedUserId ON dbo.ProfileComment.Id = dbo.ProfileCommentPings.CommentId LEFT OUTER JOIN
                          dbo.ProfilePhotoResources ON dbo.Profile.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45
-GO
 
+                                  ");
+
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwGroupComments]
 AS
 SELECT        dbo.GroupComment.Id, dbo.GroupComment.CreatedById, dbo.GroupComment.Created, dbo.GroupComment.LastModified AS Modified, dbo.GroupComment.Parent, dbo.GroupComment.Root, dbo.GroupComment.[Content], 
@@ -27,16 +37,19 @@ FROM            dbo.ProfileCommentResources LEFT OUTER JOIN
                          dbo.Profile AS Profile_1 ON dbo.GroupComment.CreatedById = Profile_1.Id ON dbo.ProfileCommentResources.CommentId = dbo.GroupComment.Id LEFT OUTER JOIN
                          dbo.Profile AS Profile_2 INNER JOIN
                          dbo.GroupCommentPings ON Profile_2.Id = dbo.GroupCommentPings.MentionedUserId ON dbo.GroupComment.Id = dbo.GroupCommentPings.CommentId
-GO
 
+                                  ");
+
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwComments]
 AS
 select * from vwProfileComments
 UNION ALL
 select * from vwGroupComments
-GO
 
+                                  ");
 
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwCommentsType]
 AS
 SELECT        Id, 0 AS Type
@@ -44,8 +57,24 @@ FROM            dbo.ProfileComment
 union all
 SELECT        Id, 10 AS Type
 FROM            dbo.GroupComment
+
+                                  ");
+
+            migrationBuilder.Sql($@"
+CREATE  VIEW [dbo].[vwCreateProfileFollowerBasicInfo]
+AS
+SELECT        dbo.ProfileFollower.ProfileId, dbo.ProfileFollower.FollowedDate, dbo.Profile.Email AS ProfileEmail, dbo.Profile.PhoneNumber AS ProfilePhone, dbo.Profile.UserName AS ProfileUserName, 
+                         dbo.ProfileFollower.FollowerProfileId AS FollowerId, dbo.Profile.NumberOfFollowers AS NumberOfProfileFollowers, Profile_1.UserName AS FollowerName, 
+                         dbo.ProfilePhotoResources.FullPath AS FollowerProfileMediumPhotoPath
+FROM            dbo.Profile AS Profile_1 INNER JOIN
+                         dbo.Profile INNER JOIN
+                         dbo.ProfileFollower ON dbo.Profile.Id = dbo.ProfileFollower.ProfileId ON Profile_1.Id = dbo.ProfileFollower.FollowerProfileId INNER JOIN
+                         dbo.ProfilePhotoResources ON Profile_1.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45
 GO
 
+                                  ");
+
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwCreatedGroupMemberBasicInfo]
 AS
 SELECT        dbo.Profile.UserName AS MemberName, dbo.Profile.PhoneNumber, dbo.Profile.GenderId, dbo.Profile.BirthDate, dbo.Profile.City, dbo.Profile.Country, dbo.GroupMember.IsAdmin, dbo.GroupMember.JoinDate, 
@@ -58,23 +87,13 @@ FROM            dbo.Profile INNER JOIN
 WHERE        (dbo.Profile.IsDeleted = 0)
 GO
 
-CREATE  VIEW [dbo].[vwCreateProfileFollowerBasicInfo]
-AS
-SELECT        dbo.ProfileFollower.ProfileId, dbo.ProfileFollower.FollowedDate, dbo.Profile.Email AS ProfileEmail, dbo.Profile.PhoneNumber AS ProfilePhone, dbo.Profile.UserName AS ProfileUserName, 
-                         dbo.ProfileFollower.FollowerProfileId AS FollowerId, dbo.Profile.NumberOfFollowers AS NumberOfProfileFollowers, Profile_1.UserName AS FollowerName, 
-                         dbo.ProfilePhotoResources.FullPath AS FollowerProfileMediumPhotoPath
-FROM            dbo.Profile AS Profile_1 INNER JOIN
-                         dbo.Profile INNER JOIN
-                         dbo.ProfileFollower ON dbo.Profile.Id = dbo.ProfileFollower.ProfileId ON Profile_1.Id = dbo.ProfileFollower.FollowerProfileId INNER JOIN
-                         dbo.ProfilePhotoResources ON Profile_1.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45
-GO
 
 
-
-
+                                  ");
+            migrationBuilder.Sql($@"
 CREATE VIEW [dbo].[vwNotifications]
 AS
-SELECT        dbo.ProfileNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.ProfileNotification.NotificationType, dbo.ProfileNotification.ParticipantId, dbo.ProfileNotification.IsSeen, 
+SELECT      dbo.ProfileNotification.id,  dbo.ProfileNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.ProfileNotification.NotificationType, dbo.ProfileNotification.ParticipantId, dbo.ProfileNotification.IsSeen, 
                          dbo.ProfileNotification.NotificationCategory AS CategoryType, dbo.Profile.GenderId, dbo.ProfileNotification.[Content], dbo.ProfilePhotoResources.FullPath AS ParticipantPhotoPath, dbo.ProfileNotification.CreatedDate, 
                          dbo.ProfileNotification.Target, dbo.ProfileNotification.ProfileId AS CategoryId, Profile_1.UserName AS CategoryName
 FROM            dbo.ProfileNotification INNER JOIN
@@ -82,35 +101,17 @@ FROM            dbo.ProfileNotification INNER JOIN
                          dbo.ProfilePhotoResources ON dbo.Profile.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45 INNER JOIN
                          dbo.Profile AS Profile_1 ON dbo.ProfileNotification.ProfileId = Profile_1.Id
 UNION ALL
-SELECT        dbo.GroupNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.GroupNotification.NotificationType, dbo.GroupNotification.ParticipantId, dbo.GroupNotification.IsSeen, 
+SELECT     dbo.GroupNotification.id,    dbo.GroupNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.GroupNotification.NotificationType, dbo.GroupNotification.ParticipantId, dbo.GroupNotification.IsSeen, 
                          dbo.GroupNotification.NotificationCategory AS CategoryType, dbo.Profile.GenderId, dbo.GroupNotification.[Content] AS Message, dbo.ProfilePhotoResources.FullPath AS ParticipantPhotoPath, dbo.GroupNotification.CreatedDate, 
                          dbo.GroupNotification.Target, dbo.GroupNotification.GroupId AS CategoryId, dbo.[Group].Name AS CategoryName
 FROM            dbo.GroupNotification INNER JOIN
                          dbo.Profile ON dbo.GroupNotification.ParticipantId = dbo.Profile.Id INNER JOIN
                          dbo.ProfilePhotoResources ON dbo.Profile.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45 INNER JOIN
                          dbo.[Group] ON dbo.GroupNotification.GroupId = dbo.[Group].Id
-GO
 
+                                  ");
 
---CREATE VIEW [dbo].[vwNotifications]
---AS
---SELECT        dbo.ProfileNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.ProfileNotification.NotificationType, dbo.ProfileNotification.ParticipantId, dbo.ProfileNotification.IsSeen, 
---                         dbo.ProfileNotification.NotificationCategory AS CategoryType, dbo.Profile.GenderId, dbo.ProfileNotification.[Content], dbo.ProfilePhotoResources.FullPath AS ParticipantPhotoPath, dbo.ProfileNotification.CreatedDate,
---                          dbo.ProfileNotification.Target, dbo.ProfileNotification.ProfileId AS CategoryId, Profile_1.UserName AS CategoryName
---FROM            dbo.ProfileNotification INNER JOIN
---                         dbo.Profile ON dbo.ProfileNotification.ParticipantId = dbo.Profile.Id INNER JOIN
---                         dbo.ProfilePhotoResources ON dbo.Profile.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45 INNER JOIN
---                         dbo.Profile AS Profile_1 ON dbo.ProfileNotification.ProfileId = Profile_1.Id
---UNION ALL
---SELECT        dbo.GroupNotification.ProfileId, dbo.Profile.UserName AS ParticipantName, dbo.GroupNotification.NotificationType, dbo.GroupNotification.ParticipantId, dbo.GroupNotification.IsSeen, 
---                         dbo.GroupNotification.NotificationCategory AS CategoryType, dbo.Profile.GenderId, dbo.GroupNotification.[Content] AS Message, dbo.ProfilePhotoResources.FullPath AS ParticipantPhotoPath, dbo.GroupNotification.CreatedDate, 
---                         dbo.GroupNotification.Target, dbo.GroupNotification.GroupId AS CategoryId, dbo.[Group].Name AS CategoryName
---FROM            dbo.GroupNotification INNER JOIN
---                         dbo.Profile ON dbo.GroupNotification.ParticipantId = dbo.Profile.Id INNER JOIN
---                         dbo.ProfilePhotoResources ON dbo.Profile.Id = dbo.ProfilePhotoResources.ProfileId AND dbo.ProfilePhotoResources.PhotoSize = 45 INNER JOIN
---                         dbo.[Group] ON dbo.GroupNotification.GroupId = dbo.[Group].Id AND dbo.Profile.Id = dbo.[Group].ProfileId
---GO
-
+            migrationBuilder.Sql($@"
 CREATE PROCEDURE [dbo].[spCreateGroupMember]
 (
      @groupId varchar(100)
@@ -131,7 +132,7 @@ DECLARE @Num as int= (select count(*) from  GroupMember where GroupId=@groupId a
 	   insert into GroupMember([Id],[GroupId],[MemberId],[JoinDate],[IsAdmin]) 
 	  values(CONVERT(varchar(100), newid()),@groupId,@memberId,GETDATE(),0);
 
-	  update [Group] set NumberOfMember=NumberOfMember+1 where id=@groupId;
+	  update [Group] set NumberOfMembers=NumberOfMembers+1 where id=@groupId;
 	 
         COMMIT TRANSACTION 
     END TRY
@@ -143,33 +144,15 @@ DECLARE @Num as int= (select count(*) from  GroupMember where GroupId=@groupId a
     END CATCH
 	 end 
 
-	    --public string MemberId { get; set; }
-     --   public string MemberProfileMediumPhotoPath { get; set; }
-     --   public string MemberName { get; set; }
-     --   public string PhoneNumber { get; set; }
-     --   public string Email { get; set; }
-     --   public string City { get; set; }
-     --   public string Country { get; set; }
-     --   public bool IsAdmin { get; set; }
-     --   public DateTime JoinDate { get; set; }
-     --   public int NumberOfGroupMembers { get; set; }
-	  --   public int GroupName { get; set; }
-	  	  --   public int GroupId { get; set; }
-
 	 select GroupId,GroupName ,MemberId,MemberProfileMediumPhotoPath,MemberName,PhoneNumber,Email,City,Country,IsAdmin,JoinDate
 	        ,(select count(*) from GroupMember where GroupId=@groupId)  as NumberOfGroupMembers
 			from [dbo].[vwCreatedGroupMemberBasicInfo]
 			where GroupId=@groupId and MemberId=@memberId
 END;
 
+                                  ");
 
-
-GO
-/****** Object:  StoredProcedure [dbo].[spCreateGroupViewer]    Script Date: 11/4/2020 5:21:17 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+            migrationBuilder.Sql($@"
 
 Create PROCEDURE [dbo].[spCreateGroupViewer]
 (
@@ -192,7 +175,7 @@ DECLARE @Num as int= (select count(*) from  GroupViewer where ViewerProfileId=@v
 	   insert into GroupViewer([Id],[GroupId],[ViewerProfileId],[ViewerDate]) 
 	  values(CONVERT(varchar(100), newid()),@groupId,@viewerId,GETDATE());
 
-	  update [Group] set NumberOfViewer=NumberOfViewer+1 where id=@groupId;
+	  update [Group] set NumberOfViewers=NumberOfViewers+1 where id=@groupId;
 	 
         COMMIT TRANSACTION 
     END TRY
@@ -203,14 +186,11 @@ DECLARE @Num as int= (select count(*) from  GroupViewer where ViewerProfileId=@v
         END
     END CATCH
 	 end 
-   select top (1) NumberOfViewer from [Group] where id=@groupId;
+   select top (1) NumberOfViewers from [Group] where id=@groupId;
 END;
+                                  ");
 
-GO
-
-
-
-
+            migrationBuilder.Sql($@"
 CREATE PROCEDURE [dbo].[spCreateProfileFollower]
 (
      @profileId varchar(100)
@@ -243,25 +223,15 @@ DECLARE @Num as int= (select count(*) from  ProfileFollower where FollowerProfil
     END CATCH
 	 end 
 
-	    --public string ProfileId { get; set; }
-     --   public string ProfileUserName { get; set; }
-     --   public string ProfilePhone { get; set; }
-     --   public string ProfileEmail { get; set; }
-     --   public int NumberOfUnSeenProfileFollowers { get; set; }
-     --   public string FollowerId { get; set; }
-     --   public string FollowerName { get; set; }
-     --   public DateTime FollowedDate { get; set; }
-     --   public string FollowerProfileMediumPhotoPath { get; set; }
-
 	 	   select  ProfileEmail,[NumberOfProfileFollowers],ProfileId,ProfileUserName,ProfilePhone,FollowerId,FollowerName,FollowedDate,FollowerProfileMediumPhotoPath,
 		   (select count(*) from ProfileNotification where ProfileId=@profileId and (IsSeen is null or IsSeen=0) and NotificationType =30 ) as NumberOfUnSeenProfileFollowers
 		   from vwCreateProfileFollowerBasicInfo
 		   where FollowerId=@followerId and  ProfileId=@profileId;
 END;
 
+                                  ");
 
-
-GO
+            migrationBuilder.Sql($@"
 
 Create PROCEDURE [dbo].[spCreateProfileViewer]
 (
@@ -296,7 +266,11 @@ DECLARE @Num as int= (select count(*) from  ProfileViewer where ViewerProfileId=
 	 end 
    select top (1) NumberOfViewers from Profile where id=@profileId;
 END;
-GO
+
+                                  ");
+
+            migrationBuilder.Sql($@"
+
 
 CREATE PROCEDURE [dbo].[spDeleteGroupMember]
 (
@@ -314,7 +288,7 @@ BEGIN
     BEGIN TRY
 
 	  delete from GroupMember where  GroupId=@groupId and MemberId=@memberId;
-	  update [Group] set NumberOfMember=NumberOfMember-1 where id=@groupId;
+	  update [Group] set NumberOfMembers=NumberOfMembers-1 where id=@groupId;
 	  
       COMMIT TRANSACTION 
 		
@@ -328,14 +302,8 @@ BEGIN
 	 end 
 	 select count(*) from GroupMember where GroupId=@groupId;
 END;
-GO
-/****** Object:  StoredProcedure [dbo].[spDeleteProfileFollower]    Script Date: 11/4/2020 5:21:17 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
+                                  ");
+            migrationBuilder.Sql($@"
 CREATE PROCEDURE [dbo].[spDeleteProfileFollower]
 (
      @profileId varchar(100)
@@ -366,7 +334,10 @@ BEGIN
 	 end 
 	 select count(*) from ProfileFollower where ProfileId=@profileId;
 END;
-GO
+
+                                  ");
+
+            migrationBuilder.Sql($@"
 
 Create  PROCEDURE [dbo].[spUpdateGroupCommentUpvoteCommand]
 (
@@ -417,11 +388,9 @@ else
 	(select top 1 UserName from profile where id =GroupId) as CategoryName,CreatedById
 	from GroupComment  where id=@CommentId; 
 END;
+                                  ");
 
-GO
-
-
-
+            migrationBuilder.Sql($@"
 Create  PROCEDURE [dbo].[spUpdateProfileCommentUpvoteCommand]
 (
      @CommentId varchar(100)
@@ -472,8 +441,9 @@ else
 	from ProfileComment  where id=@CommentId; 
 END;
 
-GO
+                                  ");
 
+            migrationBuilder.Sql($@"
 
 CREATE PROCEDURE [dbo].[spViewComments]
 (
@@ -662,7 +632,9 @@ union
 select * from @tempTable
 ) result
 END
-GO
+                                  ");
+
+            migrationBuilder.Sql($@"
 
 
 CREATE PROCEDURE [dbo].[spViewGroupComments]
@@ -817,8 +789,9 @@ select * from @tempTable
 ) result
 
 END
-GO
+                                  ");
 
+            migrationBuilder.Sql($@"
 CREATE PROCEDURE [dbo].[spViewProfileComments]
 (
      @Profile varchar(100)
@@ -974,9 +947,11 @@ union
 select * from @tempTable
 ) result
 END
-GO
+
+                                  ");
 
 
+            migrationBuilder.Sql($@"
 CREATE PROCEDURE [dbo].[spViewSpesificCommentIncludeReplies]
 (
      @UserId varchar(100)
@@ -1158,3 +1133,12 @@ select * from @tempTable
 ) result
 END
 
+                                  ");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+
+        }
+    }
+}

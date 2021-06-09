@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Yamaanco.Infrastructure.EF.Persistence.MSSQL.Migrations.YamaancoIdentityDb
 {
-    public partial class InitialLinkIdentityDb : Migration
+    public partial class InitialYamaancoIdentityDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

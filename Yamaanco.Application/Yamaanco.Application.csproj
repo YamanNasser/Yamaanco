@@ -7,29 +7,8 @@
 
   <ItemGroup>
     <Compile Remove="Features\Comments\Handlers\Notifications\**" />
-    <Compile Remove="SqlScripts\Commands\**" />
-    <Compile Remove="SqlScripts\Handlers\**" />
-    <Compile Remove="SqlScripts\Models\**" />
-    <Compile Remove="SqlScripts\Notifications\**" />
-    <Compile Remove="SqlScripts\Queries\**" />
-    <Compile Remove="SqlScripts\Validators\**" />
-    <Compile Remove="SqlScripts\ViewModel\**" />
     <EmbeddedResource Remove="Features\Comments\Handlers\Notifications\**" />
-    <EmbeddedResource Remove="SqlScripts\Commands\**" />
-    <EmbeddedResource Remove="SqlScripts\Handlers\**" />
-    <EmbeddedResource Remove="SqlScripts\Models\**" />
-    <EmbeddedResource Remove="SqlScripts\Notifications\**" />
-    <EmbeddedResource Remove="SqlScripts\Queries\**" />
-    <EmbeddedResource Remove="SqlScripts\Validators\**" />
-    <EmbeddedResource Remove="SqlScripts\ViewModel\**" />
     <None Remove="Features\Comments\Handlers\Notifications\**" />
-    <None Remove="SqlScripts\Commands\**" />
-    <None Remove="SqlScripts\Handlers\**" />
-    <None Remove="SqlScripts\Models\**" />
-    <None Remove="SqlScripts\Notifications\**" />
-    <None Remove="SqlScripts\Queries\**" />
-    <None Remove="SqlScripts\Validators\**" />
-    <None Remove="SqlScripts\ViewModel\**" />
   </ItemGroup>
 
   <ItemGroup>
