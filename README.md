@@ -26,11 +26,12 @@ This layer contains all application logic. It is dependent on the domain layer, 
 ## Infrastructure
 This layer contains classes for accessing external resources such as file systems, web services, smtp, and so on. These classes should be based on interfaces defined within the application layer.
 
-## WebApi
+## WebApi 
 These are remote clients that use the application as a service via HTTP APIs . A remote client can be a SPA (Single Page App), a mobile application, or a 3rd-party consumer. 
 
-# Web API Documentation 
+# Web API Documentation and Features Description
 https://bit.ly/3oLAEaf
+
 
 # Development Requirements
 1. PC/Laptop
@@ -74,11 +75,18 @@ https://bit.ly/3oLAEaf
   <li>Run the application and start explore the APIs.</li>
 </ol>
 
+# Contributing
+Please create issues to report bugs, suggest new functionalities, ask questions or just share your thoughts about the project. We will really appreciate your contribution, thanks.
+
 # License
 Distributed under the MIT License.
+
+# Founders
+ <a href="https://www.linkedin.com/in/yamannasser/">Yaman Nasser</a> Software Engineer, Palestine
 
 # Support
 Has this Project helped you learn something New? or Helped you at work? Do Consider Supporting. Here are a few ways by which you can support.
 1. Leave a star! ⭐
 2. Recommend this awesome project to your colleagues.
+
 
