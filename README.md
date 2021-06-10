@@ -7,8 +7,7 @@ Today we have moved towards a more socially connected society. The usage of Soci
 Public Social Media such as Facebook, Google, and Twitter become the primary way to user involvement. However, there is still a privacy concern with these public Social Media services. Public Social Networks today have more power than any government. They can know everything about us, what we like, dislike, our secret conversation, how we feel, what we, and who we talk.
 
 # What is Yamaanco?
-Yamaanco is a Headless Open Sourced  social network Solution designed for general purpose and as starting point of a social network project. It's used to improve collaboration and communication between groups of people. In addtion, it allows them to interact, socialize, share and consume information, thoughts, and ideas. Furthermore, it  contains many features used to facilitate user interaction and collaboration. Some of these features include posting, comment on the post, real-time chat session, voting, user profile, and focusing groups.
-
+Yamaanco is a Headless (i.e not connecting directly with a front-end at all) Open Sourced social network Solution. It contains the building block of the starting point of the social network project. It contains the main features that used to facilitate user interaction and collaboration. Some of these features include posting, comment on the post, real-time chat session, voting, user profile, and focusing groups.
 Yamaanco has developed with Microsoft modern technology stack, using Asp.net core. It is a Clean Architecture Solution Template-based upon ASP.NET Core 5.0. Built with Onion Architecture and incorporates the most essential Packages your Social Netowrk projects will ever need.
 
 # Overview
