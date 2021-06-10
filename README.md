@@ -84,7 +84,5 @@ Has this Project helped you learn something New? or Helped you at work? Do Consi
 1. Leave a star! ⭐
 2. Recommend this awesome project to your colleagues.
 
-# Last Word 
-I'm still learning So if there is an issue, or suggestion please do not hesitate to share it.
 
 
